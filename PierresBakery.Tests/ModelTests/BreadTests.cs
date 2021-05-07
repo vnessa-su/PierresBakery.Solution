@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BreadMenu.Tests
 {
   [TestClass]
-  public class BreadMenuTests
+  public class BreadTests
   {
     static decimal standardItemPrice = 5;
     static decimal dealPrice = 10;

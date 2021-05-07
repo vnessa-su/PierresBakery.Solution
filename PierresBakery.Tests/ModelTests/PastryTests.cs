@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace PastryMenu.Tests
 {
   [TestClass]
-  public class PastryMenuTests
+  public class PastryTests
   {
     static decimal standardItemPrice = 2;
     static decimal dealPrice = 5;
@@ -18,7 +18,7 @@ namespace PastryMenu.Tests
       decimal returnedCost = _pastryObject.GetCost(inputNumberOfItems);
       Assert.AreEqual(expectedCost, returnedCost);
     }
-    
+
     [TestMethod]
     public void GetCost_One_Two()
     {
