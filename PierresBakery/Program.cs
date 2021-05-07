@@ -17,7 +17,20 @@ namespace PurchaseOrder
     static decimal pastryDealPrice = 10;
     static decimal pastryNumberOfItemsForDeal = 3;
     private static Pastry _pastryItem = new Pastry(pastryStandardPrice, pastryDealPrice, pastryNumberOfItemsForDeal);
+
     public static void Main()
+    {
+      DisplayWelcome();
+      Console.WriteLine(" Menu \t\t Price");
+      Console.WriteLine("------\t\t-------");
+      Console.WriteLine("Bread \t\t${0} or Buy {1} get 1 free!", _breadItem.StandardPrice, _breadItem.NumberOfItemsForDeal-1);
+      Console.WriteLine("Pastry \t\t${0} or {1} for ${2}", _pastryItem.StandardPrice, _pastryItem.NumberOfItemsForDeal, _pastryItem.DealPrice);
+      Console.WriteLine();
+      decimal orderCost = RequestOrderInput();
+      Console.WriteLine("Order Total: {0:C}", orderCost);
+    }
+
+    private static void DisplayWelcome()
     {
       Console.WriteLine("                 ██████");
       Console.WriteLine("     ██      ████████████");
@@ -43,13 +56,6 @@ namespace PurchaseOrder
       Console.WriteLine("     |-----------------------------------|");
       Console.WriteLine("     |    Welcome to Pierre's Bakery!    |");
       Console.WriteLine("     |-----------------------------------|\n");
-      Console.WriteLine(" Menu \t\t Price");
-      Console.WriteLine("------\t\t-------");
-      Console.WriteLine("Bread \t\t${0} or Buy {1} get 1 free!", _breadItem.StandardPrice, _breadItem.NumberOfItemsForDeal-1);
-      Console.WriteLine("Pastry \t\t${0} or {1} for ${2}", _pastryItem.StandardPrice, _pastryItem.NumberOfItemsForDeal, _pastryItem.DealPrice);
-      Console.WriteLine();
-      decimal orderCost = RequestOrderInput();
-      Console.WriteLine("Order Total: {0:C}", orderCost);
     }
 
     private static decimal RequestOrderInput()
@@ -83,12 +89,12 @@ namespace PurchaseOrder
           }
           else
           {
-            Console.WriteLine("Unknown Item - Nothing Added", Color.Red);
+            Console.WriteLine("Nothing Added - Unknown Item: {0}", itemInput, Color.Red);
           }
         }
         catch
         {
-          Console.WriteLine("Invalid Quantity - Nothing Added", Color.Red);
+          Console.WriteLine("Nothing Added - Invalid Quantity: {0}", quantityInput, Color.Red);
         }
 
         Console.Write("Would you like to add another item? [y/n] ");
