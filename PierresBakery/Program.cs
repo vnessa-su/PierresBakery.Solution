@@ -112,9 +112,12 @@ namespace PurchaseOrder
 
         Console.Write("Would you like to add another item? [N to end order, any other key to continue] ");
         tryAgainInput = Console.ReadLine().ToLower();
-        if (tryAgainInput[0] == 'n')
+        if (tryAgainInput.Length != 0)
         {
-          orderComplete = true;
+          if (tryAgainInput[0] == 'n')
+          {
+            orderComplete = true;
+          }
         }
       }
       
