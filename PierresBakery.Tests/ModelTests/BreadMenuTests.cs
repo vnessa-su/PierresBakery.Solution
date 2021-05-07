@@ -25,5 +25,14 @@ namespace BreadMenu.Tests
       decimal returnedCost = _breadObject.GetCost(inputNumberOfItems);
       Assert.AreEqual(expectedCost, returnedCost);
     }
+
+    [TestMethod]
+    public void GetCost_Seven_TwentyFive()
+    {
+      int inputNumberOfItems = 7;
+      decimal expectedCost = 25;
+      decimal returnedCost = _breadObject.GetCost(inputNumberOfItems);
+      Assert.AreEqual(expectedCost, returnedCost);
+    }
   }
 }
