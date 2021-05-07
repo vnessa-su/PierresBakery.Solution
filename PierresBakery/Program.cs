@@ -23,7 +23,8 @@ namespace PurchaseOrder
       DisplayWelcome();
       DisplayMenu();
       decimal orderCost = RequestOrderInput();
-      Console.WriteLine("Order Total: {0:C}", orderCost);
+      Console.WriteLine("\nOrder Total: {0:C}", orderCost, Color.DarkCyan);
+      Console.WriteLine("\nThank you for visiting Pierre's Bakery!\n", Color.Blue);
     }
 
     private static void DisplayWelcome()
@@ -71,10 +72,10 @@ namespace PurchaseOrder
 
       while(!orderComplete)
       {
-        Console.Write("\nWhat would you like to order? ", Color.Yellow);
+        Console.Write("\nWhat would you like to order? ");
         string itemInput = Console.ReadLine().ToLower();
 
-        Console.Write("How many would you like? ", Color.Yellow);
+        Console.Write("How many would you like? ");
         string quantityInput = Console.ReadLine();
 
         try
@@ -91,13 +92,13 @@ namespace PurchaseOrder
             case "bread":
               itemCost = _breadItem.GetCost(quantity);
               orderCost += itemCost;
-              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput, quantity, itemCost, Color.Green);
+              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput.ToUpper(), quantity, itemCost, Color.Green);
               break;
             case "pastry":
             case "pastries":
               itemCost = _pastryItem.GetCost(quantity);
               orderCost += itemCost;
-              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput, quantity, itemCost, Color.Green);
+              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput.ToUpper(), quantity, itemCost, Color.Green);
               break;
             default:
               Console.WriteLine("Nothing Added - Unknown Item: {0}\n", itemInput, Color.Red);
@@ -109,7 +110,7 @@ namespace PurchaseOrder
           Console.WriteLine("Nothing Added - Invalid Quantity: {0}\n", quantityInput, Color.Red);
         }
 
-        Console.Write("Would you like to add another item? [y/n] ", Color.Yellow);
+        Console.Write("Would you like to add another item? [y/n] ");
         tryAgainInput = Console.ReadLine().ToLower();
         if (tryAgainInput[0] == 'n')
         {
