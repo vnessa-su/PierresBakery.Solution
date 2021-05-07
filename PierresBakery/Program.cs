@@ -110,7 +110,7 @@ namespace PurchaseOrder
           Console.WriteLine("Nothing Added - Invalid Quantity: {0}\n", quantityInput, Color.Red);
         }
 
-        Console.Write("Would you like to add another item? [y/n] ");
+        Console.Write("Would you like to add another item? [N to end order, any other key to continue] ");
         tryAgainInput = Console.ReadLine().ToLower();
         if (tryAgainInput[0] == 'n')
         {
