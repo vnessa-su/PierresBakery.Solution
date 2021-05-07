@@ -6,25 +6,89 @@ namespace PurchaseOrder
 {
   public class Program
   {
+    static decimal breadStandardPrice = 5;
+    static decimal breadDealPrice = 10;
+    static decimal breadNumberOfItemsForDeal = 3;
+    private static Bread _breadItem = new Bread(breadStandardPrice, breadDealPrice, breadNumberOfItemsForDeal);
+
+    static decimal pastryStandardPrice = 2;
+    static decimal pastryDealPrice = 10;
+    static decimal pastryNumberOfItemsForDeal = 3;
+    private static Pastry _pastryItem = new Pastry(pastryStandardPrice, pastryDealPrice, pastryNumberOfItemsForDeal);
     public static void Main()
     {
-      decimal breadStandardPrice = 5;
-      decimal breadDealPrice = 10;
-      decimal breadNumberOfItemsForDeal = 3;
-      Bread breadItem = new Bread(breadStandardPrice, breadDealPrice, breadNumberOfItemsForDeal);
+      Console.WriteLine("                 ██████");
+      Console.WriteLine("     ██      ████████████");
+      Console.WriteLine("       ██████████████████");
+      Console.WriteLine("       ██████████████████  ▓▓▓▓▓▓▓▓▓▓▓▓");
+      Console.WriteLine("     ██████████████████▓▓▓▓▓▓░░░░░░░░▓▓▓▓");
+      Console.WriteLine("   ██████████████░░░░░▓▓▓▓▓░░░░░░░░░░░░▓▓▓▓");
+      Console.WriteLine("   ████████████░░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓");
+      Console.WriteLine(" ██████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓");
+      Console.WriteLine(" ██████▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓▓");
+      Console.WriteLine(" ████  ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓");
+      Console.WriteLine("         ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓");
+      Console.WriteLine("         ▓▓░░████░░░░░░░░░░░░████░░░░██");
+      Console.WriteLine("         ▓▓░░████░░░░░░░░░░░░████░░░░██");
+      Console.WriteLine("         ▓▓▒▒▒▒░░░░██░░░░██░░░░▒▒▒▒██▓▓");
+      Console.WriteLine("         ▓▓░░░░░░░░░░████░░░░░░░░░░██▓▓");
+      Console.WriteLine("         ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓");
+      Console.WriteLine("         ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓");
+      Console.WriteLine("         ▓▓░░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓");
+      Console.WriteLine("         ▓▓▓▓░░░░░░░░░░░░░░░░░░░░░▓▓▓▓▓");
+      Console.WriteLine("         ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
 
-      decimal pastryStandardPrice = 5;
-      decimal pastryDealPrice = 10;
-      decimal pastryNumberOfItemsForDeal = 3;
-      Pastry pastryItem = new Pastry(pastryStandardPrice, pastryDealPrice, pastryNumberOfItemsForDeal);
+      Console.WriteLine("     |-----------------------------------|");
+      Console.WriteLine("     |    Welcome to Pierre's Bakery!    |");
+      Console.WriteLine("     |-----------------------------------|\n");
+      Console.WriteLine(" Menu \t\t Price");
+      Console.WriteLine("------\t\t-------");
+      Console.WriteLine("Bread \t\t${0} or Buy {1} get 1 free!", _breadItem.StandardPrice, _breadItem.NumberOfItemsForDeal-1);
+      Console.WriteLine("Pastry \t\t${0} or {1} for ${2}", _pastryItem.StandardPrice, _pastryItem.NumberOfItemsForDeal, _pastryItem.DealPrice);
+      Console.WriteLine();
+      decimal orderCost = RequestOrderInput();
+      Console.WriteLine("Order Total: {0:C}", orderCost);
+    }
 
-      Console.WriteLine("|-----------------------------|");
-      Console.WriteLine("| Welcome to Pierre's Bakery! |");
-      Console.WriteLine("|-----------------------------|\n");
-      Console.WriteLine(" Menu");
-      Console.WriteLine("------");
-      Console.WriteLine("Bread \t\t${0} or Buy 2 get 1 free!", breadStandardPrice);
-      Console.WriteLine("Pastry \t\t${0} or 3 for ${1}", pastryStandardPrice, pastryDealPrice);
+    private static decimal RequestOrderInput()
+    {
+      decimal orderCost = 0;
+      string tryAgainInput;
+      bool orderComplete = false;
+
+      while(!orderComplete)
+      {
+        Console.Write("What would you like to order? ");
+        string itemInput = Console.ReadLine().ToLower();
+
+        Console.Write("How many would you like? ");
+        int quantityInput = int.Parse(Console.ReadLine());
+
+        if (itemInput == "bread")
+        {
+          orderCost += _breadItem.GetCost(quantityInput);
+          Console.Write("Would you like to add another item? [y/n] ");
+          tryAgainInput = Console.ReadLine().ToLower();
+        }
+        else if (itemInput == "pastry" || itemInput == "pastries")
+        {
+          orderCost += _pastryItem.GetCost(quantityInput);
+          Console.Write("Would you like to add another item? [y/n] ");
+          tryAgainInput = Console.ReadLine().ToLower();
+        }
+        else
+        {
+          Console.WriteLine("Unknown Item");
+          Console.Write("Would you like to try again? [y/n] ");
+          tryAgainInput = Console.ReadLine().ToLower();
+        }
+        if (tryAgainInput[0] == 'n')
+        {
+          orderComplete = true;
+        }
+      }
+      
+      return orderCost;
     }
   }
 }
