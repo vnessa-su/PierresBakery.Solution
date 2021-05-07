@@ -13,8 +13,8 @@ This is a C# console application for determining the price of a bakery order. A 
 * See the menu of items available and their prices
 * Type in an item to add
 * Type in the quantity of that item
-* Type y to add another item
-* Type n to end order
+* Type N to end order
+* Type any other key to add another item
 * See the order price total
 
 ## Technologies Used
