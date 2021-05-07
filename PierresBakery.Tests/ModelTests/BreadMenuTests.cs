@@ -6,7 +6,10 @@ namespace BreadMenu.Tests
   [TestClass]
   public class BreadMenuTests
   {
-    private Bread _breadObject = new Bread();
+    static decimal standardItemPrice = 5;
+    static decimal dealPrice = 10;
+    static decimal numberOfItemsForDeal = 3;
+    private Bread _breadObject = new Bread(standardItemPrice, dealPrice, numberOfItemsForDeal);
 
     [TestMethod]
     public void GetCost_Zero_Zero()
