@@ -9,6 +9,15 @@ namespace BreadMenu.Tests
     private Bread _breadObject = new Bread();
 
     [TestMethod]
+    public void GetCost_Zero_Zero()
+    {
+      int inputNumberOfItems = 0;
+      decimal expectedCost = 0;
+      decimal returnedCost = _breadObject.GetCost(inputNumberOfItems);
+      Assert.AreEqual(expectedCost, returnedCost);
+    }
+
+    [TestMethod]
     public void GetCost_One_Five()
     {
       int inputNumberOfItems = 1;
