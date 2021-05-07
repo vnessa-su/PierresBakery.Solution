@@ -36,5 +36,14 @@ namespace PastryMenu.Tests
       decimal returnedCost = _pastryObject.GetCost(inputNumberOfItems);
       Assert.AreEqual(expectedCost, returnedCost);
     }
+
+    [TestMethod]
+    public void GetCost_Seven_Twelve()
+    {
+      int inputNumberOfItems = 7;
+      decimal expectedCost = 12;
+      decimal returnedCost = _pastryObject.GetCost(inputNumberOfItems);
+      Assert.AreEqual(expectedCost, returnedCost);
+    }
   }
 }
