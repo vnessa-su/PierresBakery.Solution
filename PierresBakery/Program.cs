@@ -71,10 +71,10 @@ namespace PurchaseOrder
 
       while(!orderComplete)
       {
-        Console.Write("What would you like to order? ");
+        Console.Write("\nWhat would you like to order? ", Color.Yellow);
         string itemInput = Console.ReadLine().ToLower();
 
-        Console.Write("How many would you like? ");
+        Console.Write("How many would you like? ", Color.Yellow);
         string quantityInput = Console.ReadLine();
 
         try
@@ -84,25 +84,32 @@ namespace PurchaseOrder
           {
             throw new Exception("Invalid Quantity - Negative Number");
           }
-          if (itemInput == "bread")
+
+          decimal itemCost;
+          switch(itemInput)
           {
-            orderCost += _breadItem.GetCost(quantity);
-          }
-          else if (itemInput == "pastry" || itemInput == "pastries")
-          {
-            orderCost += _pastryItem.GetCost(quantity);
-          }
-          else
-          {
-            Console.WriteLine("Nothing Added - Unknown Item: {0}", itemInput, Color.Red);
+            case "bread":
+              itemCost = _breadItem.GetCost(quantity);
+              orderCost += itemCost;
+              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput, quantity, itemCost, Color.Green);
+              break;
+            case "pastry":
+            case "pastries":
+              itemCost = _pastryItem.GetCost(quantity);
+              orderCost += itemCost;
+              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput, quantity, itemCost, Color.Green);
+              break;
+            default:
+              Console.WriteLine("Nothing Added - Unknown Item: {0}\n", itemInput, Color.Red);
+              break;
           }
         }
         catch
         {
-          Console.WriteLine("Nothing Added - Invalid Quantity: {0}", quantityInput, Color.Red);
+          Console.WriteLine("Nothing Added - Invalid Quantity: {0}\n", quantityInput, Color.Red);
         }
 
-        Console.Write("Would you like to add another item? [y/n] ");
+        Console.Write("Would you like to add another item? [y/n] ", Color.Yellow);
         tryAgainInput = Console.ReadLine().ToLower();
         if (tryAgainInput[0] == 'n')
         {
