@@ -18,9 +18,9 @@ namespace BreadMenu
     public decimal GetCost(int numberOfItems)
     {
       decimal cost = 0;
-      decimal setsOfThree = Math.Floor((decimal)numberOfItems / NumberOfItemsForDeal);
+      decimal setsOfDealNumberItems = Math.Floor((decimal)numberOfItems / NumberOfItemsForDeal);
       decimal remainingItems = numberOfItems % NumberOfItemsForDeal;
-      cost = (setsOfThree * DealPrice) + (remainingItems * StandardPrice);
+      cost = (setsOfDealNumberItems * DealPrice) + (remainingItems * StandardPrice);
       return cost;
     }
   }
