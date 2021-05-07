@@ -1,4 +1,6 @@
 using System;
+using System.Drawing;
+using Console = Colorful.Console;
 using BreadMenu;
 using PastryMenu;
 
@@ -62,26 +64,35 @@ namespace PurchaseOrder
         string itemInput = Console.ReadLine().ToLower();
 
         Console.Write("How many would you like? ");
-        int quantityInput = int.Parse(Console.ReadLine());
+        string quantityInput = Console.ReadLine();
 
-        if (itemInput == "bread")
+        try
         {
-          orderCost += _breadItem.GetCost(quantityInput);
-          Console.Write("Would you like to add another item? [y/n] ");
-          tryAgainInput = Console.ReadLine().ToLower();
+          int quantity = int.Parse(quantityInput);
+          if (quantity < 0)
+          {
+            throw new Exception("Invalid Quantity - Negative Number");
+          }
+          if (itemInput == "bread")
+          {
+            orderCost += _breadItem.GetCost(quantity);
+          }
+          else if (itemInput == "pastry" || itemInput == "pastries")
+          {
+            orderCost += _pastryItem.GetCost(quantity);
+          }
+          else
+          {
+            Console.WriteLine("Unknown Item - Nothing Added", Color.Red);
+          }
         }
-        else if (itemInput == "pastry" || itemInput == "pastries")
+        catch
         {
-          orderCost += _pastryItem.GetCost(quantityInput);
-          Console.Write("Would you like to add another item? [y/n] ");
-          tryAgainInput = Console.ReadLine().ToLower();
+          Console.WriteLine("Invalid Quantity - Nothing Added", Color.Red);
         }
-        else
-        {
-          Console.WriteLine("Unknown Item");
-          Console.Write("Would you like to try again? [y/n] ");
-          tryAgainInput = Console.ReadLine().ToLower();
-        }
+
+        Console.Write("Would you like to add another item? [y/n] ");
+        tryAgainInput = Console.ReadLine().ToLower();
         if (tryAgainInput[0] == 'n')
         {
           orderComplete = true;
