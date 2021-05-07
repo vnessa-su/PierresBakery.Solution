@@ -16,6 +16,7 @@ namespace PastryMenu
     public decimal GetCost(int numberOfItems)
     {
       decimal cost = 0;
+      cost = numberOfItems * StandardPrice;
       return cost;
     }
   }
