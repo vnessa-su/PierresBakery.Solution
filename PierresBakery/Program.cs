@@ -21,11 +21,7 @@ namespace PurchaseOrder
     public static void Main()
     {
       DisplayWelcome();
-      Console.WriteLine(" Menu \t\t Price");
-      Console.WriteLine("------\t\t-------");
-      Console.WriteLine("Bread \t\t${0} or Buy {1} get 1 free!", _breadItem.StandardPrice, _breadItem.NumberOfItemsForDeal-1);
-      Console.WriteLine("Pastry \t\t${0} or {1} for ${2}", _pastryItem.StandardPrice, _pastryItem.NumberOfItemsForDeal, _pastryItem.DealPrice);
-      Console.WriteLine();
+      DisplayMenu();
       decimal orderCost = RequestOrderInput();
       Console.WriteLine("Order Total: {0:C}", orderCost);
     }
@@ -56,6 +52,15 @@ namespace PurchaseOrder
       Console.WriteLine("     |-----------------------------------|");
       Console.WriteLine("     |    Welcome to Pierre's Bakery!    |");
       Console.WriteLine("     |-----------------------------------|\n");
+    }
+
+    private static void DisplayMenu()
+    {
+      Console.WriteLine(" Menu \t\t Price");
+      Console.WriteLine("------\t\t-------");
+      Console.WriteLine("Bread \t\t${0} or Buy {1} get 1 free!", _breadItem.StandardPrice, _breadItem.NumberOfItemsForDeal-1);
+      Console.WriteLine("Pastry \t\t${0} or {1} for ${2}", _pastryItem.StandardPrice, _pastryItem.NumberOfItemsForDeal, _pastryItem.DealPrice);
+      Console.WriteLine();
     }
 
     private static decimal RequestOrderInput()
