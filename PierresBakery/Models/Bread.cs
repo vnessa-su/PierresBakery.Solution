@@ -4,9 +4,9 @@ namespace BreadMenu
 {
   public class Bread
   {
-    private decimal StandardPrice {get; set;}
-    private decimal DealPrice {get; set;}
-    private decimal NumberOfItemsForDeal {get; set;}
+    public decimal StandardPrice {get; private set;}
+    public decimal DealPrice {get; private set;}
+    public decimal NumberOfItemsForDeal {get; private set;}
 
     public Bread(decimal standardItemPrice, decimal dealPrice, decimal numberOfItemsForDeal)
     {
