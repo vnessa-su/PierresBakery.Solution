@@ -90,9 +90,11 @@ namespace PurchaseOrder
           switch(itemInput)
           {
             case "bread":
-              itemCost = _breadItem.GetCost(quantity);
+              int extraItemCount = OfferFreeBreadItemIfQualifies(quantity);
+              int totalQuantity = quantity + extraItemCount;
+              itemCost = _breadItem.GetCost(totalQuantity);
               orderCost += itemCost;
-              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput.ToUpper(), quantity, itemCost, Color.Green);
+              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput.ToUpper(), totalQuantity, itemCost, Color.Green);
               break;
             case "pastry":
             case "pastries":
@@ -110,7 +112,7 @@ namespace PurchaseOrder
           Console.WriteLine("Nothing Added - Invalid Quantity: {0}\n", quantityInput, Color.Red);
         }
 
-        Console.Write("Would you like to add another item? [N to finish, any other key to continue] ");
+        Console.Write("Would you like to add another item? [N to complete order] ");
         tryAgainInput = Console.ReadLine().ToLower();
         if (tryAgainInput.Length != 0)
         {
@@ -120,8 +122,28 @@ namespace PurchaseOrder
           }
         }
       }
-      
       return orderCost;
+    }
+
+    private static int OfferFreeBreadItemIfQualifies(int quantityOfItem)
+    {
+      bool orderQualified = _breadItem.CanGetFreeItem(quantityOfItem);
+      string wantFreeItemAdded;
+      if (orderQualified)
+      {
+        Console.WriteLine("\nYour order qualifies for a free item!");
+        Console.Write("Would you like to add this item to your order? [Y to add] ");
+        wantFreeItemAdded = Console.ReadLine().ToLower();
+
+        if(wantFreeItemAdded.Length != 0)
+        {
+          if(wantFreeItemAdded[0] == 'y')
+          {
+            return 1;
+          }
+        }
+      }
+        return 0;
     }
   }
 }
