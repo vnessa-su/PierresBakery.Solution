@@ -23,5 +23,15 @@ namespace BreadMenu
       cost = (setsOfDealNumberItems * DealPrice) + (remainingItems * StandardPrice);
       return cost;
     }
+
+    public bool CanGetFreeItem(int numberOfItems)
+    {
+      decimal remainingItems = numberOfItems % NumberOfItemsForDeal;
+      if (remainingItems == NumberOfItemsForDeal-1)
+      {
+        return true;
+      }
+      return false;
+    }
   }
 }
