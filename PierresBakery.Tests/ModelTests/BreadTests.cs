@@ -54,5 +54,14 @@ namespace BreadMenu.Tests
       bool returnedAnswer = _breadObject.CanGetFreeItem(inputNumberOfItems);
       Assert.AreEqual(expectedAnswer, returnedAnswer);
     }
+
+    [TestMethod]
+    public void CanGetFreeItem_Two_True()
+    {
+      int inputNumberOfItems = 2;
+      bool expectedAnswer = true;
+      bool returnedAnswer = _breadObject.CanGetFreeItem(inputNumberOfItems);
+      Assert.AreEqual(expectedAnswer, returnedAnswer);
+    }
   }
 }
