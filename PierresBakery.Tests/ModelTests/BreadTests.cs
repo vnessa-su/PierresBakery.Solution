@@ -45,5 +45,14 @@ namespace BreadMenu.Tests
       decimal returnedCost = _breadObject.GetCost(inputNumberOfItems);
       Assert.AreEqual(expectedCost, returnedCost);
     }
+
+    [TestMethod]
+    public void CanGetFreeItem_Zero_False()
+    {
+      int inputNumberOfItems = 0;
+      bool expectedAnswer = false;
+      bool returnedAnswer = _breadObject.CanGetFreeItem(inputNumberOfItems);
+      Assert.AreEqual(expectedAnswer, returnedAnswer);
+    }
   }
 }
