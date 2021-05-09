@@ -1,8 +1,8 @@
 using System;
 using System.Drawing;
 using Console = Colorful.Console;
-using BreadMenu;
-using PastryMenu;
+using BakeryMenu.BreadMenu;
+using BakeryMenu.PastryMenu;
 
 namespace PurchaseOrder
 {
