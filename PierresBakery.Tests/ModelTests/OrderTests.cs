@@ -16,6 +16,7 @@ namespace UserOrder.Tests
       object[] expectedItemValues = new object[] {quantity, expectedLinePrice};
       bool isItemAdded = _orderObject.AddItemToList(itemType, quantity);
       Assert.IsTrue(isItemAdded);
+      Assert.IsTrue(_orderObject.ItemsList.ContainsKey(itemType));
       CollectionAssert.AreEqual(expectedItemValues, _orderObject.ItemsList[itemType]);
     }
   }
