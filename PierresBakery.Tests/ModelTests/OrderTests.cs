@@ -1,11 +1,17 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace UserOrder.Tests
 {
   [TestClass]
-  public class OrderTests
+  public class OrderTests : IDisposable
   {
     Order _orderObject = new Order();
+
+    public void Dispose()
+    {
+      _orderObject.ItemsList.Clear();
+    }
 
     [TestMethod]
     public void AddItemToList_ZeroBread_ItemNotAddedToItemsList()
@@ -27,6 +33,24 @@ namespace UserOrder.Tests
       bool isItemAdded = _orderObject.AddItemToList(itemType, quantity);
       Assert.IsTrue(isItemAdded);
       Assert.IsTrue(_orderObject.ItemsList.ContainsKey(itemType));
+      CollectionAssert.AreEqual(expectedItemValues, _orderObject.ItemsList[itemType]);
+    }
+
+    [TestMethod]
+    public void AddItemToList_PastryTwice_ItemsListCountOne()
+    {
+      string itemType = "pastry";
+      int quantity = 1;
+      int expectedQuantity = 2;
+      decimal expectedLinePrice = 4;
+      object[] expectedItemValues = new object[] {expectedQuantity, expectedLinePrice};
+      int expectedItemsListCount = 1;
+      bool isItemAddedFirstTime = _orderObject.AddItemToList(itemType, quantity);
+      bool isItemAddedSecondTime = _orderObject.AddItemToList(itemType, quantity);
+      Assert.IsTrue(isItemAddedFirstTime);
+      Assert.IsTrue(isItemAddedSecondTime);
+      Assert.IsTrue(_orderObject.ItemsList.ContainsKey(itemType));
+      Assert.AreEqual(expectedItemsListCount, _orderObject.ItemsList.Count);
       CollectionAssert.AreEqual(expectedItemValues, _orderObject.ItemsList[itemType]);
     }
   }
