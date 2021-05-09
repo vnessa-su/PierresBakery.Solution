@@ -21,6 +21,12 @@ namespace UserOrder
     {
       decimal lineItemPrice;
       string typeOfItem;
+
+      if (quantity <= 0)
+      {
+        return false;
+      }
+      
       if(itemType.ToLower() == "bread")
       {
         lineItemPrice = _breadObject.GetCost(quantity);
