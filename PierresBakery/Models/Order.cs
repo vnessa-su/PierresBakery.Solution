@@ -60,5 +60,15 @@ namespace UserOrder
       ItemsList.Add(typeOfItem, new object[]{quantity, lineItemPrice, category});
       return true;
     }
+
+    public decimal GetTotalCost()
+    {
+      decimal totalCost = 0;
+      if (ItemsList.Count == 0)
+      {
+        return totalCost;
+      }
+      return totalCost;
+    }
   }
 }
