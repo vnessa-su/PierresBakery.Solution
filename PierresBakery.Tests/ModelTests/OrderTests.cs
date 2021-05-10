@@ -18,7 +18,7 @@ namespace UserOrder.Tests
     {
       string itemType = "bread";
       int quantity = 0;
-      
+
       bool isItemAdded = _orderObject.AddItemToList(itemType, quantity);
       Assert.IsFalse(isItemAdded);
       Assert.IsFalse(_orderObject.ItemsList.ContainsKey(itemType));
@@ -57,6 +57,14 @@ namespace UserOrder.Tests
       Assert.IsTrue(_orderObject.ItemsList.ContainsKey(itemType));
       Assert.AreEqual(expectedItemsListCount, _orderObject.ItemsList.Count);
       CollectionAssert.AreEqual(expectedItemValues, _orderObject.ItemsList[itemType]);
+    }
+
+    [TestMethod]
+    public void GetTotal_NoItems_Zero()
+    {
+      decimal expectedTotal = 0;
+      decimal returnedTotal = _orderObject.GetTotalCost();
+      Assert.AreEqual(expectedTotal, returnedTotal);
     }
   }
 }
