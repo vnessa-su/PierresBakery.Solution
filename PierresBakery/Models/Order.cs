@@ -1,48 +1,61 @@
 using System.Collections.Generic;
-using BreadMenu;
-using PastryMenu;
+using BakeryMenu;
+using BakeryMenu.BreadMenu;
+using BakeryMenu.PastryMenu;
 
 namespace UserOrder
 {
   public class Order
   {
     public Dictionary<string, object[]> ItemsList {get; private set;}
-    private Bread _breadObject;
-    private Pastry _pastryObject;
+    public Bread BreadObject {get; private set;}
+    public Pastry PastryObject {get; private set;}
 
     public Order()
     {
       ItemsList = new Dictionary<string, object[]>();
-      _breadObject = new Bread(5, 10, 3);
-      _pastryObject = new Pastry(2, 5, 3);
+      BreadObject = new Bread(5, 10, 3);
+      PastryObject = new Pastry(2, 5, 3);
     }
 
     public bool AddItemToList(string itemType, int quantity)
     {
       decimal lineItemPrice;
-      string typeOfItem;
+      string typeOfItem = itemType.ToLower();
+      BakeryItem category;
 
       if (quantity <= 0)
       {
         return false;
       }
-      
+
+      if(ItemsList.ContainsKey(typeOfItem))
+      {
+        int currentQuantity = (int)ItemsList[typeOfItem][0];
+        int updatedQuantity = currentQuantity + quantity;
+        category = (BakeryItem)ItemsList[typeOfItem][2];
+        lineItemPrice = category.GetCost(updatedQuantity);
+        ItemsList[typeOfItem][0] = updatedQuantity;
+        ItemsList[typeOfItem][1] = lineItemPrice;
+        return true;
+      }
+
       if(itemType.ToLower() == "bread")
       {
-        lineItemPrice = _breadObject.GetCost(quantity);
-        typeOfItem = "bread";
+        lineItemPrice = BreadObject.GetCost(quantity);
+        category = BreadObject;
       }
       else if(itemType.ToLower() == "pastry" || itemType.ToLower() == "pastries")
       {
-        lineItemPrice = _pastryObject.GetCost(quantity);
-        typeOfItem = "pastry";
+        lineItemPrice = PastryObject.GetCost(quantity);
+        category = PastryObject;
       }
       else
       {
         return false;
       }
 
-      ItemsList.Add(typeOfItem, new object[]{quantity, lineItemPrice});
+      ItemsList.Add(typeOfItem, new object[]{quantity, lineItemPrice, category});
       return true;
     }
   }
