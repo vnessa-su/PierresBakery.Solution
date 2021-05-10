@@ -60,9 +60,19 @@ namespace UserOrder.Tests
     }
 
     [TestMethod]
-    public void GetTotal_NoItems_Zero()
+    public void GetTotalCost_NoItems_Zero()
     {
       decimal expectedTotal = 0;
+      decimal returnedTotal = _orderObject.GetTotalCost();
+      Assert.AreEqual(expectedTotal, returnedTotal);
+    }
+
+    [TestMethod]
+    public void GetTotalCost_FourBreadFivePastry_TwentyFour()
+    {
+      decimal expectedTotal = 24;
+      _orderObject.AddItemToList("bread", 4);
+      _orderObject.AddItemToList("pastry", 5);
       decimal returnedTotal = _orderObject.GetTotalCost();
       Assert.AreEqual(expectedTotal, returnedTotal);
     }
