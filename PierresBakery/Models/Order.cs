@@ -68,6 +68,11 @@ namespace UserOrder
       {
         return totalCost;
       }
+
+      foreach(object[] value in ItemsList.Values)
+      {
+        totalCost += (decimal)value[1];
+      }
       return totalCost;
     }
   }
