@@ -49,6 +49,7 @@ namespace UserOrder
       }
       else if(typeOfItem == "pastry" || typeOfItem == "pastries")
       {
+        typeOfItem = "pastry";
         lineItemPrice = PastryObject.GetCost(quantity);
         category = PastryObject;
       }
