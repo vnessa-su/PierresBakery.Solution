@@ -2,7 +2,7 @@ using System;
 
 namespace BakeryMenu
 {
-  public class BakeryItem
+  public abstract class BakeryItem
   {
     public decimal StandardPrice {get; set;}
     public decimal DealPrice {get; set;}
