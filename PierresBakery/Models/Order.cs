@@ -11,11 +11,11 @@ namespace UserOrder
     public Bread BreadObject {get; private set;}
     public Pastry PastryObject {get; private set;}
 
-    public Order()
+    public Order(Bread breadObject, Pastry pastryObject)
     {
       ItemsList = new Dictionary<string, object[]>();
-      BreadObject = new Bread(5, 10, 3);
-      PastryObject = new Pastry(2, 5, 3);
+      BreadObject = breadObject;
+      PastryObject = pastryObject;
     }
 
     public bool AddItemToList(string itemType, int quantity)

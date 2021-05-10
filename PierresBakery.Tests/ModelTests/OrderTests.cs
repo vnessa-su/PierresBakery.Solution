@@ -1,12 +1,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using BakeryMenu.BreadMenu;
+using BakeryMenu.PastryMenu;
 
 namespace UserOrder.Tests
 {
   [TestClass]
   public class OrderTests : IDisposable
   {
-    Order _orderObject = new Order();
+    private static Bread _breadObject = new Bread(5, 10, 3);
+    private static Pastry _pastryObject = new Pastry(2, 5, 3);
+    private Order _orderObject = new Order(_breadObject, _pastryObject);
 
     public void Dispose()
     {
