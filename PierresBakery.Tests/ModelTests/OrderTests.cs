@@ -29,7 +29,7 @@ namespace UserOrder.Tests
       string itemType = "bread";
       int quantity = 1;
       decimal expectedLinePrice = 5;
-      object[] expectedItemValues = new object[] {quantity, expectedLinePrice};
+      object[] expectedItemValues = new object[] {quantity, expectedLinePrice, _orderObject.BreadObject};
       bool isItemAdded = _orderObject.AddItemToList(itemType, quantity);
       Assert.IsTrue(isItemAdded);
       Assert.IsTrue(_orderObject.ItemsList.ContainsKey(itemType));
@@ -43,7 +43,7 @@ namespace UserOrder.Tests
       int quantity = 1;
       int expectedQuantity = 2;
       decimal expectedLinePrice = 4;
-      object[] expectedItemValues = new object[] {expectedQuantity, expectedLinePrice};
+      object[] expectedItemValues = new object[] {expectedQuantity, expectedLinePrice, _orderObject.PastryObject};
       int expectedItemsListCount = 1;
       bool isItemAddedFirstTime = _orderObject.AddItemToList(itemType, quantity);
       bool isItemAddedSecondTime = _orderObject.AddItemToList(itemType, quantity);
