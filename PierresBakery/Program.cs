@@ -3,6 +3,7 @@ using System.Drawing;
 using Console = Colorful.Console;
 using BakeryMenu.BreadMenu;
 using BakeryMenu.PastryMenu;
+using UserOrder;
 
 namespace PurchaseOrder
 {
@@ -14,16 +15,18 @@ namespace PurchaseOrder
     private static Bread _breadItem = new Bread(breadStandardPrice, breadDealPrice, breadNumberOfItemsForDeal);
 
     static decimal pastryStandardPrice = 2;
-    static decimal pastryDealPrice = 10;
+    static decimal pastryDealPrice = 5;
     static decimal pastryNumberOfItemsForDeal = 3;
     private static Pastry _pastryItem = new Pastry(pastryStandardPrice, pastryDealPrice, pastryNumberOfItemsForDeal);
+
+    private static Order _bakeryOrder = new Order(_breadItem, _pastryItem);
 
     public static void Main()
     {
       DisplayWelcome();
       DisplayMenu();
-      decimal orderCost = RequestOrderInput();
-      Console.WriteLine("\nOrder Total: {0:C}", orderCost, Color.DarkCyan);
+      RequestOrderInput();
+      DisplayOrder();
       Console.WriteLine("\nThank you for visiting Pierre's Bakery!\n", Color.Blue);
     }
 
@@ -59,14 +62,13 @@ namespace PurchaseOrder
     {
       Console.WriteLine(" Menu \t\t Price");
       Console.WriteLine("------\t\t-------");
-      Console.WriteLine("Bread \t\t${0} or Buy {1} get 1 free!", _breadItem.StandardPrice, _breadItem.NumberOfItemsForDeal-1);
-      Console.WriteLine("Pastry \t\t${0} or {1} for ${2}", _pastryItem.StandardPrice, _pastryItem.NumberOfItemsForDeal, _pastryItem.DealPrice);
+      Console.WriteLine("Bread \t\t${0} or Buy {1} get 1 free!", _bakeryOrder.BreadObject.StandardPrice, _bakeryOrder.BreadObject.NumberOfItemsForDeal-1);
+      Console.WriteLine("Pastry \t\t${0} or {1} for ${2}", _bakeryOrder.PastryObject.StandardPrice, _bakeryOrder.PastryObject.NumberOfItemsForDeal, _bakeryOrder.PastryObject.DealPrice);
       Console.WriteLine();
     }
 
-    private static decimal RequestOrderInput()
+    private static void RequestOrderInput()
     {
-      decimal orderCost = 0;
       string tryAgainInput;
       bool orderComplete = false;
 
@@ -86,25 +88,25 @@ namespace PurchaseOrder
             throw new Exception("Invalid Quantity - Negative Number");
           }
 
-          decimal itemCost;
-          switch(itemInput)
+          if (itemInput == "bread")
           {
-            case "bread":
-              int extraItemCount = OfferFreeBreadItemIfQualifies(quantity);
-              int totalQuantity = quantity + extraItemCount;
-              itemCost = _breadItem.GetCost(totalQuantity);
-              orderCost += itemCost;
-              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput.ToUpper(), totalQuantity, itemCost, Color.Green);
-              break;
-            case "pastry":
-            case "pastries":
-              itemCost = _pastryItem.GetCost(quantity);
-              orderCost += itemCost;
-              Console.WriteLine("Added {0} x{1} for {2:C}\n", itemInput.ToUpper(), quantity, itemCost, Color.Green);
-              break;
-            default:
-              Console.WriteLine("Nothing Added - Unknown Item: {0}\n", itemInput, Color.Red);
-              break;
+            int totalBreadQuantity = quantity;
+            if(_bakeryOrder.ItemsList.ContainsKey("bread"))
+            {
+              totalBreadQuantity += (int)_bakeryOrder.ItemsList["bread"][0];
+            }
+            int extraItemCount = OfferFreeBreadItemIfQualifies(totalBreadQuantity);
+            quantity += extraItemCount;
+          }
+
+          bool isItemAdded = _bakeryOrder.AddItemToList(itemInput, quantity);
+          if(isItemAdded)
+          {
+            Console.WriteLine("Added {0} x{1}\n", itemInput.ToUpper(), quantity, Color.Green);
+          }
+          else
+          {
+            Console.WriteLine("Nothing Added - Invalid Item or Zero Quantity\n", Color.Red);
           }
         }
         catch
@@ -122,7 +124,6 @@ namespace PurchaseOrder
           }
         }
       }
-      return orderCost;
     }
 
     private static int OfferFreeBreadItemIfQualifies(int quantityOfItem)
@@ -144,6 +145,25 @@ namespace PurchaseOrder
         }
       }
         return 0;
+    }
+
+    private static void DisplayOrder()
+    {
+      Console.WriteLine("---------------------------------", Color.DarkCyan);
+      Console.WriteLine("              Order", Color.DarkCyan);
+      Console.WriteLine("---------------------------------\n", Color.DarkCyan);
+
+      foreach (string key in _bakeryOrder.ItemsList.Keys)
+      {
+        string item = key.ToUpper();
+        int quantity = (int)_bakeryOrder.ItemsList[key][0];
+        decimal linePrice = (decimal)_bakeryOrder.ItemsList[key][1];
+        Console.WriteLine("{0} x{1} \t\t{2:C}\n", item, quantity, linePrice, Color.DarkCyan);
+      }
+
+      decimal orderCost = _bakeryOrder.GetTotalCost();
+      Console.WriteLine("---------------------------------", Color.DarkCyan);
+      Console.WriteLine("\tOrder Total: \t{0:C}", orderCost, Color.DarkCyan);
     }
   }
 }
