@@ -33,19 +33,21 @@ namespace UserOrder
       {
         int currentQuantity = (int)ItemsList[typeOfItem][0];
         int updatedQuantity = currentQuantity + quantity;
+
         category = (BakeryItem)ItemsList[typeOfItem][2];
         lineItemPrice = category.GetCost(updatedQuantity);
+        
         ItemsList[typeOfItem][0] = updatedQuantity;
         ItemsList[typeOfItem][1] = lineItemPrice;
         return true;
       }
 
-      if(itemType.ToLower() == "bread")
+      if(typeOfItem == "bread")
       {
         lineItemPrice = BreadObject.GetCost(quantity);
         category = BreadObject;
       }
-      else if(itemType.ToLower() == "pastry" || itemType.ToLower() == "pastries")
+      else if(typeOfItem == "pastry" || typeOfItem == "pastries")
       {
         lineItemPrice = PastryObject.GetCost(quantity);
         category = PastryObject;
